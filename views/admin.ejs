@@ -1,0 +1,99 @@
+<%- include('partials/header') %>
+    <div id="main">
+        <% if (state=='login' || state=='loginIncorrect' ) { %>
+            <style>
+                input {
+                    width: 270px;
+                    padding: 10px;
+                    margin: 10px 0;
+                    border: 2px solid #ccc;
+                    border-radius: 5px;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #007BFF;
+                    }
+                }
+            </style>
+            <form action="/admin" method="POST" style="margin: 20px; margin-top: 20vh;"
+                enctype="application/x-www-form-urlencoded">
+                <h2>Login</h2>
+                <input type="text" id="username" name="username" placeholder="Username" required><br>
+                <input type="password" id="password" name="password" placeholder="Password" required><br>
+                <button type="submit" class="btn" style="width: 150px;">Login</button>
+            </form>
+            <% if (state=='loginIncorrect' ) { %>
+                <h3 style="color: red;">Wrong credentials..</h3>
+                <% } %>
+                    <% } else if (state=='loggedIn' ) { %>
+
+                        <style>
+                            .features-container {
+                                display: flex;
+                                justify-content: space-between;
+                                margin-top: 200px;
+                                align-items: flex-start;
+                            }
+
+                            .feature-name,
+                            .feature-value {
+                                margin-bottom: 5px;
+                                height: 5vh;
+                                margin-left: 10px;
+                                accent-color: #007BFF;
+                            }
+
+                            .feature-value input,
+                            .feature-value select {
+                                padding: 8px;
+                                border: 2px solid #ccc;
+                                border-radius: 5px;
+                                transition: border-color 0.3s;
+                            }
+
+                            .feature-value input:focus,
+                            .feature-value select:focus {
+                                outline: none;
+                                border-color: #007BFF;
+                            }
+                        </style>
+
+                        <form action="/admin/save" method="POST" class="features-container" id="form">
+                            <div style="flex: 1; margin-left: min(30vw, 400px);">
+                                <h3>Feature Flags</h3>
+                                <% featureNames.forEach(name=> { %>
+                                    <div class="feature-name"><label>
+                                            <%= name %>
+                                        </label></div>
+                                    <% }) %>
+                            </div>
+                            <div style="flex: 1; margin-right: min(30vw, 400px);">
+                                <h3>Values</h3>
+                                <% featureValues.forEach((value, i)=> { %>
+                                    <div class="feature-value">
+                                        <% if (typeof value=='string' || value==null) { %>
+                                            <input type="text" name="<%= featureNames[i] %>" value="<%= value %>">
+                                            <% } %>
+                                                <% if (typeof value=='number' ) { %>
+                                                    <input type="number" name="<%= featureNames[i] %>"
+                                                        value="<%= value %>">
+                                                    <% } %>
+                                                        <% if (typeof value=='boolean' ) { %>
+                                                            <input type="checkbox" name="<%= featureNames[i] %>" <% if
+                                                                (value) { %>checked <% } %>>
+                                                                <% } %>
+                                    </div>
+                                    <% }) %>
+                            </div><br>
+                            <input type="hidden" name="username" value="<%= username %>">
+                            <input type="hidden" name="password" value="<%= password %>">
+                        </form>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button form="form" type="submit" class="btn" style="width: 180px;">Save
+                                Changes</button>
+                        </div>
+                        <% } %>
+    </div>
+    </body>
+
+    </html>

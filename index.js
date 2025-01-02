@@ -9,6 +9,8 @@ const fs = require('fs');
 const QRCode = require('qrcode');
 
 const isFlagEnabled = require('./features/isFlagEnabled');
+const getFeatures = require('./features/getFeatureList');
+const setFeatures = require('./features/setFeatureList');
 const files = require('./functions/filesJson');
 const fileName = require('./functions/fileName');
 const logger = require('./functions/logger');
@@ -30,6 +32,7 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 if (process.env.NODE_ENV == 'dev')
     app.use((req, _res, next) => {
         logger.route(`${req.method} ${req.protocol}://${req.get('host')}${req.originalUrl}`);
@@ -41,23 +44,26 @@ app.get('/', (req, res) => {
     res.render('index', { fileName: 'Share System' });
 });
 
-app.post('/upload', upload.single('file'), (req, res) => {
-    const file = req.file;
+if (!isFlagEnabled('killUpload'))
+    app.post('/upload', upload.single('file'), (req, res) => {
+        const file = req.file;
 
-    if (!file)
-        return res.status(400).json({ status: 400, error: 'No file uploaded' });
+        if (!file)
+            return res.status(400).json({ status: 400, error: 'No file uploaded' });
 
-    const fileKey = getFileKey();
-    let filesJson = files.get();
-    filesJson[file.filename] = {
-        uploadedAt: new Date().toISOString(),
-        key: fileKey,
-        type: file.mimetype
-    }
-    files.set(filesJson);
+        const fileKey = getFileKey();
+        let filesJson = files.get();
+        filesJson[file.filename] = {
+            uploadedAt: new Date().toISOString(),
+            key: fileKey,
+            type: file.mimetype
+        }
+        files.set(filesJson);
 
-    res.render('upload', { fileName: file.filename, fileKey, shareUrl: `${process.env.NODE_ENV == 'dev' ? 'http://192.168.1.50:3000' : 'https://share.hjindra.org'}/view?key=${fileKey}` });
-});
+        res.render('upload', { fileName: file.filename, fileKey, shareUrl: `${process.env.NODE_ENV == 'dev' ? 'http://192.168.1.50:3000' : 'https://share.hjindra.org'}/view?key=${fileKey}` });
+    });
+else
+    app.post('/upload', (_req, res) => res.sendStatus(503));
 
 app.get('/file/:fileName', (req, res) => {
     const { fileName } = req.params;
@@ -122,6 +128,50 @@ app.get('/generate-qr-code', (req, res) => {
         }
         return res.end(qrCodeDataUrl);
     });
+});
+
+app.get('/admin', (req, res) => {
+    res.render('admin', { state: 'login', fileName: 'Log In' });
+});
+
+app.post('/admin', (req, res) => {
+
+    const { username, password } = req.body;
+
+    if (username == process.env.X_SHARE_SYSTEM_ADMIN && password == process.env.X_SHARE_SYSTEM_PASSWORD) {
+        const features = getFeatures();
+        const featureNames = Object.keys(features);
+        const featureValues = Object.values(features);
+        res.render('admin', { state: 'loggedIn', fileName: 'Admin Panel', username, password, featureNames, featureValues });
+    } else
+        res.render('admin', { state: 'loginIncorrect', fileName: 'Log In' });
+});
+
+app.post('/admin/save', (req, res) => {
+    let data = req.body;
+    const features = getFeatures();
+    if (data.username == process.env.X_SHARE_SYSTEM_ADMIN && data.password == process.env.X_SHARE_SYSTEM_PASSWORD) {
+        delete data.username;
+        delete data.password;
+
+        Object.keys(features).forEach(n => {
+            switch (typeof features[n]) {
+                case 'number':
+                    data[n] = Number(data[n]);
+                    break;
+                case 'boolean':
+                    data[n] = data[n] == 'on';
+                    break;
+                default:
+                    data[n] = data[n] == '' ? null : data[n];
+                    break;
+            }
+        });
+
+        setFeatures(data);
+        return res.status(200).redirect('/');
+    } else
+        res.sendStatus(403);
 });
 
 cron.schedule(`*/20 * * * *`, () => {
