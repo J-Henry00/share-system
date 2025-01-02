@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+    <div id="main">
+        <h1>
+            <%= decodeURIComponent(escape(fileName)) %>
+        </h1>
+        <div id="file-preview">
+            <h3>File key: <span class="key">
+                    <%= fileKey %>
+                </span></h3>
+            <h3>File URL: <a href="<%= shareUrl %>" target="_blank" class="key">
+                    <%= shareUrl %>
+                </a></h3>
+            <img src="/generate-qr-code?key=<%= fileKey %>" alt="QR Code">
+        </div>
+    </div>
+    </body>
+
+    </html>

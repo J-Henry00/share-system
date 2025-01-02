@@ -1,0 +1,47 @@
+<%- include('partials/header') %>
+    <div id="main">
+        <h1>
+            <%= decodeURIComponent(escape(fileName)) %>
+        </h1>
+        <% if(fileType !='unknown' ) { %>
+            <div id="file-preview">
+                <% if(fileType=='text' ) { %>
+                    <textarea readonly><%= fileContent %></textarea>
+                    <% } else if (fileType=='image' ) { %>
+                        <img src="<%= fileContent %>" alt="File Preview">
+                        <% } else if (fileType=='video' ) { %>
+                            <video src="<%= fileContent %>" controls></video>
+                            <% } %>
+            </div>
+            <% } %>
+                <button id="download-button">Download
+                    File</button>
+                <button id="qr-button">Show QR Code</button>
+    </div>
+    <div class="qr-code hidden"><img src="/generate-qr-code?key=<%= fileKey %>" alt="QR Code"></div>
+
+    <script>
+        const downloadButton = document.getElementById('download-button');
+        const qrButton = document.getElementById('qr-button');
+        const mainDiv = document.querySelector('div#main');
+        const qrDiv = document.querySelector('div.qr-code');
+        downloadButton.onclick = function () {
+            window.location.href = `/download/<%= fileName %>?key=<%= fileKey %>`;
+        };
+        qrButton.onclick = function () {
+            document.body.classList.add('dark-bg');
+            mainDiv.classList.add('blur');
+            qrDiv.classList.remove('hidden');
+
+            document.addEventListener('click', function (event) {
+                if (!qrDiv.contains(event.target) && !qrButton.contains(event.target)) {
+                    document.body.classList.remove('dark-bg');
+                    mainDiv.classList.remove('blur');
+                    qrDiv.classList.add('hidden');
+                }
+            });
+        };
+    </script>
+    </body>
+
+    </html>

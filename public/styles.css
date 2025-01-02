@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+* {
+    font-family: "Roboto", serif;
+    font-weight: 500;
+    font-style: normal;
+    user-select: none;
+}
+
+h1.title {
+    font-weight: 700;
+    margin-bottom: 5vh;
+}
+
+#main {
+    text-align: center;
+    margin: 20px;
+}
+
+textarea {
+    text-align: left;
+    resize: none;
+    width: 100%;
+    height: 300px;
+    border: none;
+    user-select: text;
+    max-height: 75vh;
+}
+
+textarea:focus {
+    border: none;
+    outline: none;
+}
+
+#file-preview {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    width: 80%;
+    max-height: 75vh;
+    margin: auto;
+}
+
+form {
+    text-align: center;
+}
+
+#input-file {
+    width: 80%;
+    border: 2px dashed #ccc;
+    padding: 50px;
+    display: flex;
+    /* Change to flex for vertical centering */
+    align-items: center;
+    /* Center content vertically */
+    justify-content: center;
+    /* Center content horizontally */
+    margin: 0 auto;
+    cursor: pointer;
+    height: 45vh;
+}
+
+#input-file {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+}
+
+#input-file.drag-over {
+    border-color: #007BFF;
+}
+
+img,
+video {
+    max-height: 75vh;
+    width: auto;
+    max-width: 100%;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 18px;
+    cursor: pointer;
+    height: max(5vh, 50px);
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}
+
+#file-key-input {
+    width: 12vw;
+    border-radius: 5px;
+    height: 4vh;
+    border-color: #007BFF;
+    height: max(5vh, 50px);
+    outline: none;
+    font-size: 1rem;
+}
+
+.key {
+    user-select: text;
+    text-decoration: underline;
+}
+
+.qr-code img {
+    z-index: 9999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.blur {
+    z-index: 7;
+    filter: blur(10px) brightness(0.2);
+}
+
+.dark-bg {
+    background-color: black;
+}

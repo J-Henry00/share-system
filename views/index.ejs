@@ -1,0 +1,81 @@
+<%- include('partials/header') %>
+	<div id="main">
+		<h1 class="title">Share System</h1>
+		<section id="get-a-file">
+			<h1>Access a file</h1>
+			<div>
+				<input type="text" placeholder="File Key(ex. 12345678-ABCdef)" id="file-key-input"
+					value="00000000-xxxxxx" /><br>
+				<button id="find-file-button">Find a file</button>
+			</div>
+		</section>
+		<hr>
+		<section id="upload-a-file">
+			<h1>Upload a File</h1>
+			<form action="/upload" method="post" enctype="multipart/form-data">
+				<div id="file-upload-area">
+					<input type="file" name="file" required style="display: none;" id="file-input" />
+					<label for="file-input" id="input-file">
+						Drag and drop your file here or click to select
+					</label>
+					<button type="submit">Upload</button>
+				</div>
+			</form>
+		</section>
+	</div>
+	<script>
+		// ---------------File Access Section
+		const keyInput = document.getElementById('file-key-input');
+		const keySubmit = document.getElementById('find-file-button');
+
+		keySubmit.addEventListener('click', async e => {
+			e.preventDefault();
+
+			if (!keyInput.value) return;
+
+			let status = await fetch('/view?key=' + keyInput.value);
+			status = status.status;
+			if (status == 200)
+				return window.location.href = '/view?key=' + keyInput.value;
+			if (status == 404)
+				return alert('File not found');
+			if (status == 500)
+				return alert('Server error');
+		});
+		// --------------File Upload Section
+		const inputFile = document.getElementById('input-file');
+		const fileInput = document.getElementById('file-input');
+
+		if (fileInput.files[0])
+			inputFile.textContent = fileInput.files[0].name;
+
+		inputFile.addEventListener('dragover', (event) => {
+			event.preventDefault();
+			inputFile.classList.add('drag-over');
+		});
+
+		inputFile.addEventListener('dragleave', () => {
+			inputFile.classList.remove('drag-over');
+		});
+
+		inputFile.addEventListener('drop', (event) => {
+			event.preventDefault();
+			inputFile.classList.remove('drag-over');
+			const files = event.dataTransfer.files;
+			if (files.length > 0) {
+				fileInput.files = files;
+				inputFile.textContent = files[0].name;
+			}
+			window.focus();
+		});
+
+		fileInput.addEventListener('change', () => {
+			const files = fileInput.files;
+			if (files.length > 0) {
+				inputFile.textContent = files[0].name;
+			}
+		});
+	</script>
+	</body>
+
+	</html>

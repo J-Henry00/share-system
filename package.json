@@ -1,0 +1,41 @@
+{
+  "name": "share-system",
+  "version": "1.0.0",
+  "description": "Share system for sharing files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node .",
+    "dev": "nodemon .",
+    "wipeUploads": "node scripts/wipeUploads"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J-Henry00/share-system.git"
+  },
+  "keywords": [
+    "share",
+    "system",
+    "sharesystem"
+  ],
+  "author": "J-Henry00",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/J-Henry00/share-system/issues"
+  },
+  "homepage": "https://github.com/J-Henry00/share-system#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "fs": "^0.0.1-security",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "path": "^0.12.7",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
