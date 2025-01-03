@@ -17,6 +17,7 @@ const logger = require('./functions/logger');
 const getFileKey = require('./functions/keyGenerator');
 const findFile = require('./functions/findFileUsingKey');
 const getFileType = require('./functions/getFileType');
+const extractFlags = require('./functions/urlFlagExtractor');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -109,8 +110,7 @@ app.get('/view', (req, res) => {
 
     var fileContent = fileType == 'text' ? fs.readFileSync(path.join(UPLOADS_DIR, file), 'utf-8') : `${process.env.NODE_ENV == 'dev' ? 'http://192.168.1.50:3000' : 'https://share.hjindra.org'}/file/${file}?key=${key}`;
 
-
-    res.render('file', { fileName: file, fileKey: key, fileType, fileContent });
+    res.render('file', { fileName: file, fileKey: key, fileType, fileContent, previewPdfFiles: isFlagEnabled(`PDFPreview`) });
 });
 
 app.get('/generate-qr-code', (req, res) => {
@@ -197,4 +197,10 @@ cron.schedule(`*/20 * * * *`, () => {
     if (process.env.NODE_ENV == 'dev') console.log(removedFiles);
 })
 
-app.listen(PORT, () => logger.info(`Running ${process.env.NODE_ENV} environment on port ${PORT}`));
+app.listen(PORT, () => {
+    logger.info(`Running ${process.env.NODE_ENV} environment on port ${PORT}`);
+    logger.info(`Server is running with these flags:`);
+    Object.entries(getFeatures()).forEach(([name, value]) => {
+        console.log(`Flag "${name}" is set to "${value}"`);
+    });
+});

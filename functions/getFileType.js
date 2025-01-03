@@ -1,3 +1,5 @@
+// const isFlagEnabled = require('../features/isFlagEnabled');
+
 /**
  * Returns possible mime types for different content previews
  * @date 2025-01-01
@@ -8,6 +10,8 @@ module.exports = (mimeType) => {
 
     if (mimeType == 'text/plain')
         return 'text';
+    if (mimeType == 'application/pdf')
+        return 'pdf';
 
     let type = mimeType.split('/')[0];
     if (type == 'image' || type == 'video')

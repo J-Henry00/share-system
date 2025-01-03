@@ -7,7 +7,6 @@ const flags = JSON.parse(require('fs').readFileSync(`${__dirname}/flags.json`));
  * @returns {Boolean|undefined} Returns whetever flag is enabled or not
  */
 module.exports = (flagIdentity) => {
-
     var flag = flags[flagIdentity];
     if (!flag)
         return undefined;

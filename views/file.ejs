@@ -11,7 +11,11 @@
                         <img src="<%= fileContent %>" alt="File Preview">
                         <% } else if (fileType=='video' ) { %>
                             <video src="<%= fileContent %>" controls></video>
-                            <% } %>
+                            <% } else if (previewPdfFiles && fileType=='pdf' ) { %>
+                                <embed src="<%= fileContent %>">
+                                <% } else if (!previewPdfFiles && fileType=='pdf' ) { %>
+                                    <p>PDF Preview is currently disabled</p>
+                                    <% } %>
             </div>
             <% } %>
                 <button class="btn" id="download-button">Download
@@ -25,18 +29,21 @@
         const qrButton = document.getElementById('qr-button');
         const mainDiv = document.querySelector('div#main');
         const qrDiv = document.querySelector('div.qr-code');
+        const btnPanel = document.querySelector('div.btn-panel');
         downloadButton.onclick = function () {
             window.location.href = `/download/<%= fileName %>?key=<%= fileKey %>`;
         };
         qrButton.onclick = function () {
             document.body.classList.add('dark-bg');
             mainDiv.classList.add('blur');
+            btnPanel.classList.add('blur');
             qrDiv.classList.remove('hidden');
 
             document.addEventListener('click', function (event) {
                 if (!qrDiv.contains(event.target) && !qrButton.contains(event.target)) {
                     document.body.classList.remove('dark-bg');
                     mainDiv.classList.remove('blur');
+                    btnPanel.classList.remove('blur');
                     qrDiv.classList.add('hidden');
                 }
             });

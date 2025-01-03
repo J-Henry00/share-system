@@ -71,10 +71,16 @@ form {
 }
 
 img,
-video {
+video,
+embed {
     max-height: 75vh;
     width: auto;
     max-width: 100%;
+}
+
+embed {
+    height: 75vh;
+    width: 100%;
 }
 
 .btn {
@@ -95,7 +101,7 @@ video {
 }
 
 #file-key-input {
-    width: 12vw;
+    width: max(12vw, 120px);
     border-radius: 5px;
     height: 4vh;
     border-color: #007BFF;
@@ -156,5 +162,13 @@ video {
 
     &:hover {
         background-color: rgb(0, 75, 0);
+    }
+}
+
+@media (max-width: 700px) {
+    .btn-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
