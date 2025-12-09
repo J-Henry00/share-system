@@ -1,0 +1,10 @@
+:root {
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-main: #e0e0e0;
+  --text-muted: #a0a0a0;
+  /* Accent: Červeno-oranžová */
+  --accent: #ff5100;
+  /* Secondary: Modrá */
+  --secondary: #007bff;
+}

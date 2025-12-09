@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Share Service" />
     <title>
-        <%= decodeURIComponent(escape(fileName)) %>
+      <%= typeof fileName !== 'undefined' ? decodeURIComponent(escape(fileName))
+      : 'Share Service' %>
     </title>
-    <link rel="stylesheet" href="/styles.css">
-</head>
-
-<body>
-    <div class="btn-panel">
-        <button onclick="window.location.href='/'" class="panel-btn">Home</button>
-        <button onclick="window.location.href='/admin'" class="panel-btn">Admin</button>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          share.hjindra<span>.eu</span>
+          <% if (typeof fileKey !== 'undefined' && fileKey) { %>
+          <small style="font-size: 0.5em; color: var(--text-muted)"
+            >/ <%= fileKey %></small
+          >
+          <% } %>
+        </h1>
+        <nav>
+          <a href="/" class="btn btn-secondary">Home</a>
+          <a href="/admin" class="btn btn-secondary">Admin</a>
+        </nav>
+      </header>
     </div>
+  </body>
+</html>

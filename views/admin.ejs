@@ -3,19 +3,22 @@
         <% if (state=='login' || state=='loginIncorrect' ) { %>
             <style>
                 input {
+                    text-align: center;
                     width: 270px;
                     padding: 10px;
                     margin: 10px 0;
-                    border: 2px solid #ccc;
+                    border: 2px solid #444;
+                    background: var(--card-bg);
+                    color: navajowhite;
                     border-radius: 5px;
 
                     &:focus {
                         outline: none;
-                        border-color: #007BFF;
+                        border-color: var(--accent);
                     }
                 }
             </style>
-            <form action="/admin" method="POST" style="margin: 20px; margin-top: 20vh;"
+            <form action="/admin" method="POST" style="margin: 20px; margin-top: 20vh; text-align: center;"
                 enctype="application/x-www-form-urlencoded">
                 <h2>Login</h2>
                 <input type="text" id="username" name="username" placeholder="Username" required><br>
@@ -23,7 +26,7 @@
                 <button type="submit" class="btn" style="width: 150px;">Login</button>
             </form>
             <% if (state=='loginIncorrect' ) { %>
-                <h3 style="color: red;">Wrong credentials..</h3>
+                <h3 style="color: red; text-align: center;">Wrong credentials..</h3>
                 <% } %>
                     <% } else if (state=='loggedIn' ) { %>
 
@@ -33,6 +36,7 @@
                                 justify-content: space-between;
                                 margin-top: 200px;
                                 align-items: flex-start;
+                                text-align: center;
                             }
 
                             .feature-name,
@@ -40,13 +44,15 @@
                                 margin-bottom: 5px;
                                 height: 5vh;
                                 margin-left: 10px;
-                                accent-color: #007BFF;
+                                accent-color: var(--accent);
                             }
 
                             .feature-value input,
                             .feature-value select {
                                 padding: 8px;
-                                border: 2px solid #ccc;
+                                border: 2px solid #444;
+                                background: var(--card-bg);
+                                color: white;
                                 border-radius: 5px;
                                 transition: border-color 0.3s;
                             }
@@ -54,7 +60,7 @@
                             .feature-value input:focus,
                             .feature-value select:focus {
                                 outline: none;
-                                border-color: #007BFF;
+                                border-color: var(--accent);
                             }
                         </style>
 
@@ -94,6 +100,7 @@
                         </div>
                         <% } %>
     </div>
+</div><!-- End container -->
     </body>
 
     </html>

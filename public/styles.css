@@ -1,179 +1,219 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import 'variables.css';
 
-
-* {
-    font-family: "Roboto", serif;
-    font-weight: 500;
-    font-style: normal;
-    user-select: none;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-    background-color: rgb(19, 19, 19);
-    color: #fff;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  user-select: none;
 }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  /* text-align: center; */
+}
+
+h1,
+h2,
+h3 {
+  color: var(--text-main);
+}
+
+h1 span {
+  color: var(--accent);
+}
+
+/* Header & Nav */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #333;
+  margin-bottom: 40px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header a {
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+}
+
+/* Common Button Styles */
+.btn {
+  background: var(--accent);
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.btn:hover {
+  opacity: 0.8;
+  background-color: var(--accent);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+}
+
+/* Inputs */
+input[type='text'],
+input[type='password'],
+textarea {
+  /* width: 100%; removed based on user feedback */
+  padding: 10px;
+  background: #2b2b2b;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* --- Share Specific Styles --- */
 
 h1.title {
-    font-weight: 700;
-    margin-bottom: 5vh;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
-#main {
-    text-align: center;
-    margin: 20px;
+section {
+  margin-bottom: 40px;
+  text-align: center;
 }
 
 textarea {
-    text-align: left;
-    resize: none;
-    width: 100%;
-    height: 300px;
-    border: none;
-    user-select: text;
-    max-height: 75vh;
-}
-
-textarea:focus {
-    border: none;
-    outline: none;
+  text-align: left;
+  resize: none;
+  height: 300px;
+  user-select: text;
+  max-height: 75vh;
 }
 
 #file-preview {
-    border: 2px dashed #ccc;
-    padding: 20px;
-    width: 80%;
-    max-height: 75vh;
-    margin: auto;
+  border: 2px dashed #444;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 75vh;
+  margin: 20px auto;
+  background: var(--card-bg);
+  box-sizing: border-box;
+  overflow: auto;
 }
 
-form {
-    text-align: center;
+#file-preview img,
+#file-preview video {
+  max-width: 100%;
+  height: auto;
 }
 
-#input-file {
-    width: 80%;
-    border: 2px dashed #ccc;
-    padding: 50px;
-    display: flex;
-    /* Change to flex for vertical centering */
-    align-items: center;
-    /* Center content vertically */
-    justify-content: center;
-    /* Center content horizontally */
-    margin: 0 auto;
-    cursor: pointer;
-    height: 45vh;
+/* File Upload Area */
+#upload-a-file form {
+  text-align: center;
 }
 
 #input-file {
-    border: 2px dashed #ccc;
-    padding: 20px;
-    text-align: center;
+  width: 100%;
+  max-width: 600px;
+  border: 2px dashed #444;
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px auto;
+  cursor: pointer;
+  background: var(--card-bg);
+  transition: 0.3s;
+  border-radius: 8px;
+  min-height: 200px;
+}
+
+#input-file:hover {
+  border-color: var(--accent);
 }
 
 #input-file.drag-over {
-    border-color: #007BFF;
-}
-
-img,
-video,
-embed {
-    max-height: 75vh;
-    width: auto;
-    max-width: 100%;
-}
-
-embed {
-    height: 75vh;
-    width: 100%;
-}
-
-.btn {
-    margin-top: 20px;
-    padding: 12px 24px;
-    font-size: 18px;
-    cursor: pointer;
-    height: max(5vh, 50px);
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-
-    &:hover {
-        background-color: #0056b3;
-    }
+  border-color: var(--accent);
+  background: #333;
 }
 
 #file-key-input {
-    width: max(12vw, 120px);
-    border-radius: 5px;
-    height: 4vh;
-    border-color: #007BFF;
-    height: max(5vh, 50px);
-    outline: none;
-    font-size: 1rem;
+  width: 300px;
+  max-width: 100%;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .key {
-    user-select: text;
-    text-decoration: underline;
+  user-select: text;
+  text-decoration: underline;
+  color: var(--accent);
+}
+
+/* QR Code & Modal */
+.qr-code {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
 }
 
 .qr-code img {
-    z-index: 9999;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    filter: none;
+  pointer-events: auto;
+  filter: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border: 5px solid white;
+  max-width: 90vw;
+  max-height: 90vh;
 }
 
 .hidden {
-    display: none;
+  display: none !important;
 }
 
 .blur {
-    z-index: 7;
-    filter: blur(10px) brightness(0.2);
+  filter: blur(5px) brightness(0.4);
 }
 
 .dark-bg {
-    background-color: black;
+  overflow: hidden;
 }
 
-.btn-panel {
-    position: fixed;
-    right: 1vw;
-    top: 1vw;
-}
-
-.panel-btn {
-    margin: 5px;
-    padding: 12px;
-    font-size: 18px;
-    cursor: pointer;
-    height: max(5vh, 50px);
-    width: min(19vw, 100px);
-    background-color: green;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-weight: 800;
-    transition: background-color 0.3s;
-
-    &:hover {
-        background-color: rgb(0, 75, 0);
-    }
-}
-
-@media (max-width: 700px) {
-    .btn-panel {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+div#main {
+  text-align: center;
 }
