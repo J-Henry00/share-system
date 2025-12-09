@@ -83,7 +83,7 @@ if (!isFlagEnabled('killUpload'))
       shareUrl: `${
         process.env.NODE_ENV == 'dev'
           ? `http://${getLocalIp()}:${PORT}`
-          : 'https://share.hjindra.org'
+          : 'https://share.hjindra.eu'
       }/view?key=${fileKey}`,
     });
   });
@@ -135,7 +135,7 @@ app.get('/view', (req, res) => {
       : `${
           process.env.NODE_ENV == 'dev'
             ? `http://${getLocalIp()}:${PORT}`
-            : 'https://share.hjindra.org'
+            : 'https://share.hjindra.eu'
         }/file/${file}?key=${key}`;
 
   res.render('file', {
@@ -157,7 +157,7 @@ app.get('/generate-qr-code', (req, res) => {
   var url = `${
     process.env.NODE_ENV == 'dev'
       ? `http://${getLocalIp()}:${PORT}`
-      : 'https://share.hjindra.org'
+      : 'https://share.hjindra.eu'
   }/view?key=${key}`;
 
   QRCode.toBuffer(url, (err, qrCodeDataUrl) => {
